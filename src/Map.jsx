@@ -1,8 +1,9 @@
 import { MapContainer, TileLayer, Popup, CircleMarker, GeoJSON } from "react-leaflet";
 import plateData from "./assets/plate_boundaries.geojson.json"
 import data from "./assets/4.5_week.geojson.json";
+import Button from '@mui/material/Button'
 
-export const Map = ({setPopupInfo}) => {
+export const Map = ({setPopupInfo, radius}) => {
   const earthquakes = data.features; // Wir benötigen nur den Feature-Array aus den Daten
 
   return (
@@ -28,18 +29,20 @@ export const Map = ({setPopupInfo}) => {
         <CircleMarker
           key={i}
           center={[d.geometry.coordinates[1], d.geometry.coordinates[0]]}
-          radius={d.properties.mag**2}
+          radius={radius**2}
           pathOptions={{color: "red"}}
         >
           <Popup>
             <div 
               style={{ textAlign: "center" }}>
               {d.properties.title} <br/>
-              <button 
+              <Button 
+                variant="contained"
+                size="small"
                 onClick={() => setPopupInfo(d)}
               >
               Details anzeigen
-              </button> 
+              </Button> 
             </div>
           </Popup>
         </CircleMarker>
